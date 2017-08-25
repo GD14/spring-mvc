@@ -1,19 +1,20 @@
 package com.rong.ssm.controller;
 
 import com.rong.ssm.pojo.Item;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.HttpRequestHandler;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by GD14 on 2017/8/25.
  */
-public class ItemController1 implements Controller{
-    public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+public class ItemController2 implements HttpRequestHandler{
+    public void handleRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         List<Item> itemList=new ArrayList<Item>();
 
         Item item1=new Item();
@@ -26,9 +27,9 @@ public class ItemController1 implements Controller{
         item2.setPrice(3);
         itemList.add(item1);
         itemList.add(item2);
-        ModelAndView modelAndView=new ModelAndView();
-        modelAndView.addObject("itemList",itemList);
-        modelAndView.setViewName("/WEB-INF/jsp/item/itemsList.jsp");
-        return modelAndView;
+
+
+        request.setAttribute("itemList",itemList);
+        request.getRequestDispatcher("/WEB-INF/jsp/item/itemsList.jsp").forward(request,response);
     }
 }
